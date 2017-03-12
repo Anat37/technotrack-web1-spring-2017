@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <title>{% block title %}Dolgopa-city{% endblock %}</title>
+</head>
+
+<body>
+    <div id="navigation">
+        {% block navigation %}
+            <h5><a href="{% url "core:home" %}">Главная</a></h5>
+        {% endblock navigation %}
+    </div>
+    <div id="content">
+        {% block content %}
+            <h1><a href="{% url "blog:blog_list" %}">Список блогов</a></h1>
+            <p>Количество блогов: {{ blogs_cnt }}</p>
+            <p>Количество постов: {{ posts_cnt }}</p>
+            <p>Количество комментов: {{ comments_cnt }}</p>
+        {% endblock content %}
+    </div>
+</body>
+</html>

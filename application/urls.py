@@ -17,8 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^', include('core.urls', namespace="core")),
     url(r'^admin/', admin.site.urls),
-    #url(r'^blog/', include('blog.urls', namespace="blog")),
-    #url(r'^post/', include('post.urls', namespace="post")),
-    #url(r'^comment/', include('comment.urls', namespace="comment"))
+    url(r'^blog/', include('blog.urls', namespace="blog")),
+    url(r'^post/', include('post.urls', namespace="post")),
 ]

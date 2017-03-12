@@ -11,7 +11,7 @@ class Post(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    blog = models.ForeignKey('blog.Blog', related_name='blogs')
+    blog = models.ForeignKey('blog.Blog', related_name='posts')
 
 class Attach(models.Model):
     image = models.ImageField()

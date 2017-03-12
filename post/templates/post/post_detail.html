@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}Post{% endblock %}
+
+{% block navigation %}
+    <h5><a href="{% url "core:home" %}">Главная</a></h5>
+    <h5><a href="{% url "blog:blog_detail" object.blog.id%}">Назад к {{ object.blog.title }}</a></h5>
+{% endblock navigation %}
+
+{% block content %}
+        <div>
+            <div>
+                <h1> {{ object.title }} </h1>
+                <p style="text-decoration-style: wavy">Опубликован: {{ object.created_at }}</p>
+            </div>
+            <div>
+                <p>{{ object.text }}</p>
+            </div>
+            <div id="comments">
+                {% for comment in object.comments.all %}
+                    {% include "comment/comment_block.html" with object=comment %}
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
