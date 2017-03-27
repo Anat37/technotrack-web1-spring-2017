@@ -1,0 +1,9 @@
+<div>
+    <h1> <a href="{% url "blog:post_detail" object.id%}">{{ object.title }}</a>
+        {% if object.author == user %}
+            <a href="{% url "blog:post_update" object.id%}">Редактировать</a>
+        {% endif %}
+    </h1>
+    <p style="text-decoration-style: wavy">Опубликован: {{ object.created_at }}</p>
+</div>
+

@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 from django.views.generic.base import TemplateView
 
-from blog.models import Blog
+from blog.models import Blog, Post
 from comment.models import Comment
-from post.models import Post
 
 
 class HomePageView(TemplateView):
@@ -15,3 +18,21 @@ class HomePageView(TemplateView):
         context['posts_cnt'] = Post.objects.all().count()
         context['comments_cnt'] = Comment.objects.all().count()
         return context
+
+
+class AppUserCreateForm(UserCreationForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password1', 'password2')
+
+
+class CreateUser(CreateView):
+    form_class = AppUserCreateForm
+    model = get_user_model()
+    template_name = 'core/register.html'
+    success_url = reverse_lazy('core:register_success')
+
+
+class RegisterSuc(TemplateView):
+    template_name = "core/register_success.html"
+

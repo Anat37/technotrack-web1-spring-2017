@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+        <div>
+            <form>
+                {{ form }}
+            </form>
+            <p>Вы вышли из учетной записи</p>
+        </div>
+{% endblock %}

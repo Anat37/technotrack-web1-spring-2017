@@ -42,11 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'blog',
-    'post',
     'comment'
 ]
 
 AUTH_USER_MODEL = 'core.User'
+
+LOGIN_REDIRECT_URL = "core:home"
+
+LOGIN_URL = "core:login"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

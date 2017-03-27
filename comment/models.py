@@ -11,4 +11,4 @@ class Comment(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    post = models.ForeignKey('post.Post', related_name='comments')
+    post = models.ForeignKey('blog.Post', related_name='comments')

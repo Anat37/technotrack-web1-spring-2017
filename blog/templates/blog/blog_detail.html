@@ -8,6 +8,11 @@
                 <h1>{{ object.title }}</h1>
             </div>
             <div>
+                {% if user == object.editor %}
+                    <a href="{% url "blog:post_create" %}">Создать Пост</a>
+                {% endif %}
+            </div>
+            <div>
                 {% for post in object.posts.all %}
                     {% include "post/post_short.html" with object=post%}
                 {% endfor %}
