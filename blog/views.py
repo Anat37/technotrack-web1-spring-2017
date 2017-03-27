@@ -87,6 +87,10 @@ class PostUpdate(UpdateView):
     def get_success_url(self):
         return resolve_url("blog:post_detail", pk=self.object.pk)
 
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
+
+
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -113,3 +117,6 @@ class BlogUpdate(UpdateView):
 
     def get_success_url(self):
         return resolve_url("blog:post_detail", pk=self.object.pk)
+
+    def get_queryset(self):
+        return Blog.objects.filter(editor=self.request.user)
