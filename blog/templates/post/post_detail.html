@@ -3,31 +3,44 @@
 {% block title %}Post{% endblock %}
 
 {% block navigation %}
-    <h5><a href="{% url "core:home" %}">Главная</a></h5>
-    <h5><a href="{% url "blog:blog_detail" post.blog.id%}">Назад к {{ post.blog.title }}</a></h5>
+    <ul class="breadcrumb">
+        <li><a href="{% url "core:home" %}">Главная</a><span class="divider"></span></li>
+        <li><a href="{% url "blog:blog_list" %}">Блоги</a><span class="divider"></span></li>
+        <li><a href="{% url "blog:blog_detail" post.blog.id%}">
+            {{ post.blog.title }}</a><span class="divider"></span></li>
+        <li class="active">{{ post.title }}</li>
+    </ul>
 {% endblock navigation %}
 
 {% block content %}
-        <div>
-            <div>
-                <h1> {{ post.title }} </h1>
-                <p style="text-decoration-style: wavy">Опубликован: {{ post.created_at }}</p>
-            </div>
-            <div>
-                <p>{{ post.text }}</p>
-            </div>
-            <div id="comments">
-                {% for comment in post.comments.all %}
-                    {% include "comment/comment_block.html" with object=comment %}
-                {% endfor %}
-            </div>
-            {% if user.is_authenticated %}
-                <div>
-                    <form action="" method="post">{% csrf_token %}
-                        {{ form }}
-                        <input type="submit" value="Создать">
-                    </form>
+    <article class="container-fluid">
+            <div class="blog-post">
+                <h1 class="title"><strong>{{ post.title }}</strong></h1>
+                <div class="row blog-post-meta">
+                    <div class="col-sm-2 col-lg-1"> Updated at: </div>
+                    <div class="col-sm-3 col-lg-2"> {{ post.updated_at }}</div>
+                    {% if post.author == user %}
+                        <div class="col-md-7"><a href="{% url "blog:post_update" post.id%}">Редактировать</a></div>
+                    {% endif %}
                 </div>
-            {% endif %}
-        </div>
+                <hr>
+                <div>
+                   <p>{{ post.text }}</p>
+                </div>
+                <hr>
+                <div id="comments">
+                    {% for comment in post.comments.all %}
+                        {% include "comment/comment_block.html" with object=comment %}
+                    {% endfor %}
+                </div>
+                {% if user.is_authenticated %}
+                    <div>
+                        <form action="" method="post">{% csrf_token %}
+                            {{ form }}
+                            <input type="submit" value="Создать">
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
 {% endblock %}

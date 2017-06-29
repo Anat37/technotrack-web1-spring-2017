@@ -1,22 +1,36 @@
 {% extends "core/base.html" %}
 
-{% block title %}Список блогов{% endblock %}
+{% block title %}Блоги{% endblock %}
+
+{% block navigation %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "core:home" %}">Главная</a><span class="divider"></span></li>
+        <li class="active">Блоги</li>
+    </ul>
+{% endblock navigation %}
 
 {% block content %}
-    <div>
-        {% if not user.is_anonumous %}
-            <a href="{% url "blog:blog_create" %}">Создать Блог</a>
-            <a href="{% url "blog:post_create" %}">Создать Пост</a>
+    <div class="container-fluid">
+        {% if not user.is_anonymous %}
+            <form method="get">
+                <button class="btn btn-primary" formaction="{% url "blog:blog_create" %}">Создать Блог</button>
+                <button class="btn btn-primary" formaction="{% url "blog:post_create" %}">Создать Пост</button>
+            </form>
         {% endif %}
     </div>
     {% for blog in object_list %}
-        <div>
-            <div>
-                <a href="{% url "blog:blog_detail" blog.id%}">{{ blog.title }}</a>
-                {% if blog.editor == user %}
-                    <a href="{% url "blog:blog_update" blog.id%}">Редактировать</a>
-                {% endif %}
+        <div class="container-fluid">
+            <div class="blog-header">
+                <h1 class="blog-title"><a href="{% url "blog:blog_detail" blog.id%}">{{ blog.title }}</a></h1>
+                <div class="row lead blog-description">
+                    <div class="col-sm-2"> Updated at: </div>
+                    <div class="col-sm-3"> {{ blog.updated_at }}</div>
+                    {% if blog.editor == user %}
+                        <div class="col-sm-2"><a href="{% url "blog:blog_update" blog.id%}">Редактировать</a></div>
+                    {% endif %}
+                </div>
             </div>
+            <hr>
         </div>
     {% endfor %}
 {% endblock %}

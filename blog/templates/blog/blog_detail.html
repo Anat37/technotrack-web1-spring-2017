@@ -2,16 +2,30 @@
 
 {% block title %}{{ object.title }}{% endblock %}
 
+{% block navigation %}
+    <ul class="breadcrumb">
+        <li><a href="{% url "core:home" %}">Главная</a><span class="divider"></span></li>
+        <li><a href="{% url "blog:blog_list" %}">Блоги</a><span class="divider"></span></li>
+        <li class="active">{{ object.title }}</li>
+    </ul>
+{% endblock navigation %}
+
 {% block content %}
-        <div>
-            <div>
-                <h1>{{ object.title }}</h1>
-            </div>
-            <div>
-                {% if user == object.editor %}
-                    <a href="{% url "blog:post_create" %}">Создать Пост</a>
+        <div class="container-fluid">
+            <div class="blog-header">
+                <h1 class="blog-title">{{ blog.title }}</h1>
+                <div class="row">
+                    <div class="col-sm-2"> Updated at: </div>
+                    <div class="col-sm-4"> {{ blog.updated_at }}</div>
+                </div>
+                {% if blog.editor == user %}
+                        <form method="get">
+                            <button class="btn btn-primary" formaction="{% url "blog:blog_update" blog.id%}">Редактировать</button>
+                            <button class="btn btn-primary" formaction="{% url "blog:post_create" %}">Создать Пост</button>
+                        </form>
                 {% endif %}
             </div>
+            <hr>
             <div>
                 {% for post in object.posts.all %}
                     {% include "post/post_short.html" with object=post%}
